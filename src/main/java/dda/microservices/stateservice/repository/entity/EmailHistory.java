@@ -33,6 +33,7 @@ public class EmailHistory {
   private String recipientEmail;
   private String subject;
   private String message;
+  @Column(name = "created_at")
   private LocalDateTime createdAt;
   @Enumerated(EnumType.STRING)
   private EmailStatus status;
