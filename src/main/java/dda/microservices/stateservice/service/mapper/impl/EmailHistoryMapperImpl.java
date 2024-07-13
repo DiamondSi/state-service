@@ -9,12 +9,28 @@ import org.springframework.stereotype.Component;
 public class EmailHistoryMapperImpl implements EmailHistoryMapper {
 
   @Override
-  public EmailHistoryDto toDto(EmailHistory emailHistory) {
-    if (emailHistory == null) {
+  public EmailHistoryDto toDto(EmailHistory entity) {
+    if (entity == null) {
       return null;
     }
-    return new EmailHistoryDto(emailHistory.getId(), emailHistory.getRecipientEmail(),
-        emailHistory.getSubject(), emailHistory.getMessage(), emailHistory.getCreatedAt(),
-        emailHistory.getStatus());
+    return new EmailHistoryDto(entity.getId(), entity.getRecipientEmail(),
+        entity.getSubject(), entity.getMessage(), entity.getCreatedAt(),
+        entity.getStatus());
+  }
+
+  @Override
+  public EmailHistory toEntity(EmailHistoryDto dto) {
+    if (dto == null) {
+      return null;
+    }
+    EmailHistory entity = new EmailHistory();
+    entity.setId(dto.id());
+    entity.setRecipientEmail(dto.recipientEmail());
+    entity.setSubject(dto.subject());
+    entity.setMessage(dto.message());
+    entity.setCreatedAt(dto.createdAt());
+    entity.setStatus(dto.status());
+
+    return entity;
   }
 }

@@ -6,4 +6,6 @@ import dda.microservices.stateservice.service.model.EmailHistoryDto;
 public interface EmailHistoryMapper {
 
   EmailHistoryDto toDto(EmailHistory emailHistory);
+
+  EmailHistory toEntity(EmailHistoryDto emailHistoryDto);
 }

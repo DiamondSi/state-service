@@ -8,10 +8,14 @@ import dda.microservices.stateservice.service.model.EmailHistoryDto;
 import dda.microservices.stateservice.service.model.UserDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class UserMapperImpl implements UserMapper {
-private final EmailHistoryMapper emailHistoryMapper;
+
+  private final EmailHistoryMapper emailHistoryMapper;
+
   @Override
   public UserDto toDto(User user) {
     if (user == null) {
@@ -32,5 +36,16 @@ private final EmailHistoryMapper emailHistoryMapper;
   @Override
   public List<UserDto> toDto(List<User> users) {
     return users.stream().map(this::toDto).toList();
+  }
+
+  @Override
+  public User toEntity(UserDto dto) {
+    if (dto == null) {
+      return null;
+    }
+    User user = new User();
+    user.setEmail(dto.email());
+    user.setUsername(dto.username());
+    return user;
   }
 }
