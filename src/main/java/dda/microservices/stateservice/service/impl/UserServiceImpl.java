@@ -18,6 +18,11 @@ public class UserServiceImpl implements UserService {
   private final UserMapper userMapper;
 
   @Override
+  public Boolean exist(Long id) {
+    return userRepository.existsById(id);
+  }
+
+  @Override
   public UserDto createUser(UserDto userDto) {
     User user = userMapper.toEntity(userDto);
     User savedUser = userRepository.save(user);

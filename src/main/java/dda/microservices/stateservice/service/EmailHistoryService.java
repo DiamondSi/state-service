@@ -1,11 +1,12 @@
 package dda.microservices.stateservice.service;
 
 import dda.microservices.stateservice.service.model.EmailHistoryDto;
+import dda.microservices.stateservice.service.model.EmailHistoryPersistDto;
+import dda.microservices.stateservice.service.model.EmailHistoryResponse;
 import java.util.List;
 
 public interface EmailHistoryService {
-
-  EmailHistoryDto addEmailHistoryByUserId(Long userId, EmailHistoryDto emailHistoryDto);
+  EmailHistoryResponse add(EmailHistoryPersistDto dto);
 
   EmailHistoryDto getEmailHistoryById(Long id);
 

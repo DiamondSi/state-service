@@ -5,6 +5,8 @@ import java.util.List;
 
 public interface UserService {
 
+  Boolean exist(Long id);
+
   UserDto createUser(UserDto userDto);
 
   UserDto getUserById(Long id);
