@@ -3,10 +3,11 @@ package dda.microservices.stateservice.service;
 import dda.microservices.stateservice.service.model.EmailHistoryDto;
 import dda.microservices.stateservice.service.model.EmailHistoryPersistDto;
 import dda.microservices.stateservice.service.model.EmailHistoryResponse;
+import dda.microservices.stateservice.service.model.EmailHistoryUpdateRequest;
 import java.util.List;
 
 public interface EmailHistoryService {
-  EmailHistoryResponse add(EmailHistoryPersistDto dto);
+  EmailHistoryResponse persist(EmailHistoryPersistDto dto);
 
   EmailHistoryDto getEmailHistoryById(Long id);
 
@@ -14,7 +15,7 @@ public interface EmailHistoryService {
 
   List<EmailHistoryDto> getAllEmailHistory();
 
-  EmailHistoryDto updateEmailHistory(Long id, EmailHistoryDto emailHistoryDto);
+  EmailHistoryDto updateEmailHistory(Long id, EmailHistoryUpdateRequest emailHistoryUpdateRequest);
 
   void deleteEmailHistory(Long id);
 }

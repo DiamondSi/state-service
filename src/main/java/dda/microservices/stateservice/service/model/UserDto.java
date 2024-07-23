@@ -9,4 +9,3 @@ public record UserDto(
     List<EmailHistoryDto> emailHistories) {
 
 }
-

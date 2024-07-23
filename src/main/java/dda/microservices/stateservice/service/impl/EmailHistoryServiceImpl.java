@@ -7,6 +7,8 @@ import dda.microservices.stateservice.service.mapper.EmailHistoryMapper;
 import dda.microservices.stateservice.service.model.EmailHistoryDto;
 import dda.microservices.stateservice.service.model.EmailHistoryPersistDto;
 import dda.microservices.stateservice.service.model.EmailHistoryResponse;
+import dda.microservices.stateservice.service.model.EmailHistoryUpdateRequest;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,10 +19,11 @@ public class EmailHistoryServiceImpl implements EmailHistoryService {
 
   private final EmailHistoryRepository emailHistoryRepository;
   private final EmailHistoryMapper emailHistoryMapper;
+  private final UserServiceImpl userService;
 
 
   @Override
-  public EmailHistoryResponse add(EmailHistoryPersistDto dto) {
+  public EmailHistoryResponse persist(EmailHistoryPersistDto dto) {
     EmailHistory emailHistory = emailHistoryMapper.toEntity(dto);
     EmailHistory savedEntity = emailHistoryRepository.save(emailHistory);
 
@@ -29,26 +32,42 @@ public class EmailHistoryServiceImpl implements EmailHistoryService {
 
   @Override
   public EmailHistoryDto getEmailHistoryById(Long id) {
-    return null;
+    EmailHistory emailHistory = emailHistoryRepository.findById(id)
+        .orElseThrow(
+            () -> new EntityNotFoundException("Email History with id %s not Found".formatted(id)));
+
+    return emailHistoryMapper.toDto(emailHistory);
   }
 
   @Override
   public List<EmailHistoryDto> getEmailHistoriesByUserId(Long userId) {
-    return List.of();
+    return userService.getUserById(userId).emailHistories();
   }
 
   @Override
   public List<EmailHistoryDto> getAllEmailHistory() {
-    return List.of();
+    List<EmailHistory> histories = emailHistoryRepository.findAll();
+
+    return histories.stream().map(emailHistoryMapper::toDto).toList();
   }
 
   @Override
-  public EmailHistoryDto updateEmailHistory(Long id, EmailHistoryDto emailHistoryDto) {
-    return null;
+  public EmailHistoryDto updateEmailHistory(Long id, EmailHistoryUpdateRequest emailHistoryUpdateRequest) {
+    EmailHistory emailHistory = emailHistoryRepository.findById(id)
+        .orElseThrow(
+            () -> new EntityNotFoundException("Email History with id %s not Found".formatted(id)));
+    emailHistory.setRecipientEmail(emailHistoryUpdateRequest.recipientEmail());
+    emailHistory.setSubject(emailHistoryUpdateRequest.subject());
+    emailHistory.setStatus(emailHistoryUpdateRequest.status());
+    EmailHistory savedEmailHistory = emailHistoryRepository.save(emailHistory);
+    return emailHistoryMapper.toDto(savedEmailHistory);
   }
 
   @Override
   public void deleteEmailHistory(Long id) {
+    EmailHistory emailHistory = emailHistoryRepository.findById(id).orElseThrow(
+        () -> new EntityNotFoundException("Email History with id %s not Found".formatted(id)));
 
+    emailHistoryRepository.delete(emailHistory);
   }
 }

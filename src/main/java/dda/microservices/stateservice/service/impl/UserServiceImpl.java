@@ -5,6 +5,7 @@ import dda.microservices.stateservice.repository.entity.User;
 import dda.microservices.stateservice.service.UserService;
 import dda.microservices.stateservice.service.mapper.UserMapper;
 import dda.microservices.stateservice.service.model.UserDto;
+import dda.microservices.stateservice.service.model.UserUpdateRequest;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class UserServiceImpl implements UserService {
   private final UserMapper userMapper;
 
   @Override
-  public Boolean exist(Long id) {
+  public Boolean exists(Long id) {
     return userRepository.existsById(id);
   }
 
@@ -26,6 +27,7 @@ public class UserServiceImpl implements UserService {
   public UserDto createUser(UserDto userDto) {
     User user = userMapper.toEntity(userDto);
     User savedUser = userRepository.save(user);
+
     return userMapper.toDto(savedUser);
   }
 
@@ -33,23 +35,35 @@ public class UserServiceImpl implements UserService {
   public UserDto getUserById(Long id) {
     User user = userRepository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("User with id %s not found".formatted(id)));
+
     return userMapper.toDto(user);
   }
 
   @Override
   public List<UserDto> getAllUsers() {
     List<User> users = userRepository.findAll();
+
     return userMapper.toDto(users);
   }
 
   @Override
-  public UserDto updateUser(Long id, UserDto updatedUserDto) {
+  public UserDto updateUser(Long id, UserUpdateRequest userUpdateRequest) {
     User user = userRepository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("User with id %s not found".formatted(id)));
-    user.setEmail(updatedUserDto.email());
-    user.setUsername(updatedUserDto.username());
-    //TODO разобраться с Id
+    user.setEmail(userUpdateRequest.email());
+    user.setUsername(userUpdateRequest.username());
     User udatedUser = userRepository.save(user);
+
+    return userMapper.toDto(udatedUser);
+  }
+
+  @Override
+  public UserDto updateEmail(Long id, String newEmail) {
+    User user = userRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("User with id %s not found".formatted(id)));
+    user.setEmail(newEmail);
+    User udatedUser = userRepository.save(user);
+
     return userMapper.toDto(udatedUser);
   }
 
@@ -57,6 +71,7 @@ public class UserServiceImpl implements UserService {
   public void deleteUser(Long id) {
     User user = userRepository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("User with id %s not found".formatted(id)));
+
     userRepository.delete(user);
   }
 

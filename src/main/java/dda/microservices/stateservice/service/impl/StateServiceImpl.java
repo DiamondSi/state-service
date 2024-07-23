@@ -20,7 +20,7 @@ public class StateServiceImpl implements StateService {
 
   @Override
   public EmailHistoryResponse addEmailHistory(Long userId, EmailHistoryPersistRequest request) {
-    if (!userService.exist(userId)){
+    if (!userService.exists(userId)){
       throw new RuntimeException("no user %s".formatted(userId));
     }
     EmailHistoryPersistDto persistDto = new EmailHistoryPersistDto();
@@ -30,6 +30,6 @@ public class StateServiceImpl implements StateService {
     persistDto.setMessage(request.message());
     persistDto.setStatus(EmailStatus.CREATED);
     persistDto.setCreatedAt(LocalDateTime.now());
-    return emailHistoryService.add(persistDto);
+    return emailHistoryService.persist(persistDto);
   }
 }
