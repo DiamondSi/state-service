@@ -1,0 +1,4 @@
+###
+GET http://localhost:8080/api/v1/admin/email-history
+
+<> 2024-07-24T203152.200.json

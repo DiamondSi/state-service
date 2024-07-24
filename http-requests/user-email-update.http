@@ -1,0 +1,17 @@
+###
+@id =4
+PUT http://localhost:8080/api/v1/user/{{id}}
+Content-Type: application/json
+
+{
+  "email":"some@new-email.com"
+}
+
+<> 2024-07-24T184527.200.json
+<> 2024-07-24T184356.400.json
+<> 2024-07-24T184049.200.json
+<> 2024-07-24T184020.200.json
+<> 2024-07-24T183743.200.json
+<> 2024-07-24T182327.200.json
+<> 2024-07-24T163221.200.json
+<> 2024-07-24T163147.200.json

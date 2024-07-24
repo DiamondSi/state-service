@@ -1,0 +1,7 @@
+###
+@id = 3
+GET http://localhost:8080/api/v1/admin/email-history/{{id}}
+Content-Type: application/json
+
+<> 2024-07-24T203425.200.json
+<> 2024-07-24T203401.500.json

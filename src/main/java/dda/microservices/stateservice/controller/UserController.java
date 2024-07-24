@@ -1,7 +1,8 @@
 package dda.microservices.stateservice.controller;
 
 import dda.microservices.stateservice.service.UserService;
-import dda.microservices.stateservice.service.model.UserDto;
+import dda.microservices.stateservice.service.model.UserEmailUpdateRequest;
+import dda.microservices.stateservice.service.model.UserUpdateResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,11 +20,11 @@ public class UserController {
 
 
   @PutMapping("{id}")
-  public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id,
-      @RequestBody String newEmail) {
-    UserDto userDto = userService.updateEmail(id, newEmail);
+  public ResponseEntity<UserUpdateResponse> updateUser(@PathVariable("id") Long id,
+      @RequestBody UserEmailUpdateRequest request) {
+    UserUpdateResponse response = userService.updateEmail(id, request);
 
-    return ResponseEntity.ok(userDto);
+    return ResponseEntity.ok(response);
   }
 
 }

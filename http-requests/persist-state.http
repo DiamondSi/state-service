@@ -1,0 +1,12 @@
+###
+@userId =3
+POST http://localhost:8080/api/v1/state/user/{{userId}}
+Content-Type: application/json
+
+{
+  "recipientEmail": "recipient@email.tv",
+  "subject": "subject text",
+  "message": "new message text"
+}
+
+<> 2024-07-24T202803.200.json

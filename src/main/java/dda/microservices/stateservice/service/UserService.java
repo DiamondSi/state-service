@@ -1,7 +1,9 @@
 package dda.microservices.stateservice.service;
 
-import dda.microservices.stateservice.service.model.UserUpdateRequest;
 import dda.microservices.stateservice.service.model.UserDto;
+import dda.microservices.stateservice.service.model.UserEmailUpdateRequest;
+import dda.microservices.stateservice.service.model.UserUpdateRequest;
+import dda.microservices.stateservice.service.model.UserUpdateResponse;
 import java.util.List;
 
 public interface UserService {
@@ -14,9 +16,9 @@ public interface UserService {
 
   List<UserDto> getAllUsers();
 
-  UserDto updateUser(Long id, UserUpdateRequest userUpdateRequest);
+  UserUpdateResponse updateUser(Long id, UserUpdateRequest userUpdateRequest);
 
-  UserDto updateEmail(Long id, String newEmail);
+  UserUpdateResponse updateEmail(Long id, UserEmailUpdateRequest userEmailUpdateRequest);
 
   void deleteUser(Long id);
 }

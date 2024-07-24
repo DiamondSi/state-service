@@ -1,0 +1,17 @@
+###
+POST http://localhost:8080/api/v1/admin/user
+Content-Type: application/json
+
+{
+  "email": "new-user@email.com",
+  "username": "new user"
+}
+
+<> 2024-07-24T195802.201.json
+<> 2024-07-24T195022.201.json
+<> 2024-07-24T195017.500.json
+<> 2024-07-24T195016.201.json
+<> 2024-07-24T195015.201.json
+<> 2024-07-24T195014.201.json
+<> 2024-07-24T195011.201.json
+<> 2024-07-24T194938.201.json

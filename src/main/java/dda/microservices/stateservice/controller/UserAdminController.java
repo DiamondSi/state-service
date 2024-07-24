@@ -3,6 +3,7 @@ package dda.microservices.stateservice.controller;
 import dda.microservices.stateservice.service.UserService;
 import dda.microservices.stateservice.service.model.UserDto;
 import dda.microservices.stateservice.service.model.UserUpdateRequest;
+import dda.microservices.stateservice.service.model.UserUpdateResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,25 +27,29 @@ public class UserAdminController {
   @GetMapping
   public ResponseEntity<List<UserDto>> getAllUsers() {
     List<UserDto> users = userService.getAllUsers();
+
     return ResponseEntity.ok(users);
   }
 
   @GetMapping("{id}")
   public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id) {
     UserDto userDto = userService.getUserById(id);
+
     return ResponseEntity.ok(userDto);
   }
 
   @PutMapping("{id}")
-  public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id,
+  public ResponseEntity<UserUpdateResponse> updateUser(@PathVariable("id") Long id,
       @RequestBody UserUpdateRequest userUpdateRequest) {
-    UserDto userDto = userService.updateUser(id, userUpdateRequest);
-    return ResponseEntity.ok(userDto);
+    UserUpdateResponse response = userService.updateUser(id, userUpdateRequest);
+
+    return ResponseEntity.ok(response);
   }
 
   @DeleteMapping("{id}")
   public ResponseEntity<String> deleteUser(@PathVariable("id") Long id) {
     userService.deleteUser(id);
+
     return ResponseEntity.ok("Deleted user with id %s".formatted(id));
   }
 

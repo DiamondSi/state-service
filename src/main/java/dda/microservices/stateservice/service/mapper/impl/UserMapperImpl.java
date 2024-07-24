@@ -6,6 +6,7 @@ import dda.microservices.stateservice.service.mapper.EmailHistoryMapper;
 import dda.microservices.stateservice.service.mapper.UserMapper;
 import dda.microservices.stateservice.service.model.EmailHistoryDto;
 import dda.microservices.stateservice.service.model.UserDto;
+import dda.microservices.stateservice.service.model.UserUpdateResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -46,6 +47,16 @@ public class UserMapperImpl implements UserMapper {
     User user = new User();
     user.setEmail(dto.email());
     user.setUsername(dto.username());
+
     return user;
+  }
+
+  @Override
+  public UserUpdateResponse toUpdateResponse(User user) {
+    if (user == null) {
+      return null;
+    }
+
+    return new UserUpdateResponse(user.getId(), user.getEmail(), user.getUsername());
   }
 }
